@@ -1,0 +1,69 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <LangVersion>13</LangVersion>
+        <TargetFrameworks>netstandard2.1;net8.0;net9.0</TargetFrameworks>
+        <RootNamespace>LuminDelegates</RootNamespace>
+        <NoWarn>$(NoWarn);CS1591;CA2255</NoWarn>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+    
+    <ItemGroup Condition="$(TargetFramework) == 'netstandard2.1'">
+      <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.2" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <None Update="LuminAction.tt">
+        <Generator>TextTemplatingFileGenerator</Generator>
+        <LastGenOutput>LuminAction.cs</LastGenOutput>
+      </None>
+      <None Update="LuminFunction.tt">
+        <Generator>TextTemplatingFileGenerator</Generator>
+        <LastGenOutput>LuminFunction.cs</LastGenOutput>
+      </None>
+      <None Update="LuminDelegate_CreateAction.tt">
+        <Generator>TextTemplatingFileGenerator</Generator>
+        <LastGenOutput>LuminDelegate_CreateAction.cs</LastGenOutput>
+      </None>
+      <None Update="LuminDelegate_CreateFunction.tt">
+        <Generator>TextTemplatingFileGenerator</Generator>
+        <LastGenOutput>LuminDelegate_CreateFunction.cs</LastGenOutput>
+      </None>
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Compile Update="LuminAction.cs">
+        <DependentUpon>LuminAction.tt</DependentUpon>
+      </Compile>
+      <Compile Update="LuminFunction.cs">
+        <AutoGen>True</AutoGen>
+        <DesignTime>True</DesignTime>
+        <DependentUpon>LuminFunction.tt</DependentUpon>
+      </Compile>
+      <Compile Update="LuminDelegate_CreateAction.cs">
+        <AutoGen>True</AutoGen>
+        <DesignTime>True</DesignTime>
+        <DependentUpon>LuminDelegate_CreateAction.tt</DependentUpon>
+      </Compile>
+      <Compile Update="LuminDelegate_CreateFunction.cs">
+        <AutoGen>True</AutoGen>
+        <DesignTime>True</DesignTime>
+        <DependentUpon>LuminDelegate_CreateFunction.tt</DependentUpon>
+      </Compile>
+      <Compile Update="LuminAction.cs">
+        <AutoGen>True</AutoGen>
+        <DesignTime>True</DesignTime>
+        <DependentUpon>LuminAction.tt</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+</Project>

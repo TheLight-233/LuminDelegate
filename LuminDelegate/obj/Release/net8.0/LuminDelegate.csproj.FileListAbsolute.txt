@@ -1,0 +1,11 @@
+C:\Users\28027\Desktop\C#\LuminDelegate\LuminDelegate\bin\Release\net8.0\LuminDelegate.deps.json
+C:\Users\28027\Desktop\C#\LuminDelegate\LuminDelegate\bin\Release\net8.0\LuminDelegate.dll
+C:\Users\28027\Desktop\C#\LuminDelegate\LuminDelegate\bin\Release\net8.0\LuminDelegate.pdb
+C:\Users\28027\Desktop\C#\LuminDelegate\LuminDelegate\obj\Release\net8.0\LuminDelegate.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\28027\Desktop\C#\LuminDelegate\LuminDelegate\obj\Release\net8.0\LuminDelegate.AssemblyInfoInputs.cache
+C:\Users\28027\Desktop\C#\LuminDelegate\LuminDelegate\obj\Release\net8.0\LuminDelegate.AssemblyInfo.cs
+C:\Users\28027\Desktop\C#\LuminDelegate\LuminDelegate\obj\Release\net8.0\LuminDelegate.csproj.CoreCompileInputs.cache
+C:\Users\28027\Desktop\C#\LuminDelegate\LuminDelegate\obj\Release\net8.0\LuminDelegate.dll
+C:\Users\28027\Desktop\C#\LuminDelegate\LuminDelegate\obj\Release\net8.0\refint\LuminDelegate.dll
+C:\Users\28027\Desktop\C#\LuminDelegate\LuminDelegate\obj\Release\net8.0\LuminDelegate.pdb
+C:\Users\28027\Desktop\C#\LuminDelegate\LuminDelegate\obj\Release\net8.0\ref\LuminDelegate.dll
