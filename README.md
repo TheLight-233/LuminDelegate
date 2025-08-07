@@ -3,8 +3,8 @@
 适用于 C# 和 Unity 的零分配、超高性能委托
 
 Zero-Allocation, Ultra-Performance Delegate for C# and Unity
-![alt text](void_methods_benchmark-1.png)
-![alt text](allocated_memory_benchmark-1.png)
+![alt text](void_methods_benchmark.png)
+![alt text](allocated_memory_benchmark.png)
 
 LuminDelegate 是一款基于方法指针的高性能 0GC 委托库，作为 C# 原生委托的全新实现，它在性能与内存控制上实现了突破性优化 —— 对于值类型的委托创建，不同于原生委托会产生装箱操作，LuminDelegate 可完全避免此类开销，且调用速度比原生委托快 50%；对于静态方法，调用效率提升 30%。
 
