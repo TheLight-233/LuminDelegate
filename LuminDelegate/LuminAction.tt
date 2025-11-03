@@ -31,6 +31,7 @@ namespace LuminDelegates;
             ));
 #>
 
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
 public unsafe struct LuminAction<
 #if NET8_0_OR_GREATER
 [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
