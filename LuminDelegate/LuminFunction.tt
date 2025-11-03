@@ -36,6 +36,7 @@ namespace LuminDelegates;
             i <= paramCount ? $"typeof(T{i}).TypeHandle" : "default"));
 #>
 
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
 public unsafe struct LuminFunction<
 #if NET8_0_OR_GREATER
 [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
