@@ -27,6 +27,10 @@ LuminDelegate具备以下特性：
 4.  **传入实例和方法名，如果条件允许，可以提前缓存方法名的HashCode一并传入以优化性能**
 5.  **调用Dispose方法释放资源，否则会导致资源泄漏**
 
+## 已知bug
+Unity Editor环境下捕获泛型方法，当泛型为引用类型时会段报错。
+.Net和IL2CPP环境下没有影响。
+
 ```cpp
 class Calculator
 {
@@ -97,6 +101,8 @@ static void Main()
     luminDel.Invoke();
 }
 ```
+## IL2CPP
+IL2CPP与.Net, Mono环境不同，因此需要显示调用LuminDelegate.SwitchToIl2Cpp()方法以支持IL2CPP。
 
 ## Ref Struct
 
