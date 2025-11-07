@@ -99,6 +99,7 @@ static void Main()
 ```
 ## IL2CPP
 IL2CPP与.Net, Mono环境不同，因此需要显示调用LuminDelegate.SwitchToIl2Cpp()方法以支持IL2CPP。
+两种模式不能混用，不能在Unity Editor或.Net环境下使用IL2CPP模式，否则会导致段报错！
 
 ## 已知bug
 Unity Editor环境下捕获泛型方法，当泛型为引用类型时会段报错。
