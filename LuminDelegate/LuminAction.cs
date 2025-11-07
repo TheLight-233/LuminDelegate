@@ -16,6 +16,7 @@ using static LuminDelegates.LuminDelegate;
 namespace LuminDelegates;
 
 
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
 public unsafe struct LuminAction<
 #if NET8_0_OR_GREATER
 [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
@@ -455,14 +456,12 @@ TTarget> : IDisposable, ICloneable, ISerializable, IEquatable<LuminAction<TTarge
     
             Type[] paramTypes = Type.EmptyTypes;
 
-#if NET8_0_OR_GREATER
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, paramTypes)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#else
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, null, paramTypes, null)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#endif
-            result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
+            var method = MethodFinder.GetConcreteMethod(typeof(TTarget), methodName, paramTypes);
+
+            if (IsIl2Cpp)
+                result = new MethodCache(method.IsStatic, method.MethodHandle.Value, method);
+            else
+                result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
 
             Methods.TryAdd(key, result);
         }
@@ -473,6 +472,7 @@ TTarget> : IDisposable, ICloneable, ISerializable, IEquatable<LuminAction<TTarge
     #endregion
 }
 
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
 public unsafe struct LuminAction<
 #if NET8_0_OR_GREATER
 [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
@@ -914,14 +914,12 @@ TTarget, T1> : IDisposable, ICloneable, ISerializable, IEquatable<LuminAction<TT
     
             Type[] paramTypes = [ typeof(T1) ];
 
-#if NET8_0_OR_GREATER
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, paramTypes)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#else
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, null, paramTypes, null)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#endif
-            result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
+            var method = MethodFinder.GetConcreteMethod(typeof(TTarget), methodName, paramTypes);
+
+            if (IsIl2Cpp)
+                result = new MethodCache(method.IsStatic, method.MethodHandle.Value, method);
+            else
+                result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
 
             Methods.TryAdd(key, result);
         }
@@ -932,6 +930,7 @@ TTarget, T1> : IDisposable, ICloneable, ISerializable, IEquatable<LuminAction<TT
     #endregion
 }
 
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
 public unsafe struct LuminAction<
 #if NET8_0_OR_GREATER
 [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
@@ -1375,14 +1374,12 @@ TTarget, T1, T2> : IDisposable, ICloneable, ISerializable, IEquatable<LuminActio
     
             Type[] paramTypes = [ typeof(T1), typeof(T2) ];
 
-#if NET8_0_OR_GREATER
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, paramTypes)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#else
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, null, paramTypes, null)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#endif
-            result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
+            var method = MethodFinder.GetConcreteMethod(typeof(TTarget), methodName, paramTypes);
+
+            if (IsIl2Cpp)
+                result = new MethodCache(method.IsStatic, method.MethodHandle.Value, method);
+            else
+                result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
 
             Methods.TryAdd(key, result);
         }
@@ -1393,6 +1390,7 @@ TTarget, T1, T2> : IDisposable, ICloneable, ISerializable, IEquatable<LuminActio
     #endregion
 }
 
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
 public unsafe struct LuminAction<
 #if NET8_0_OR_GREATER
 [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
@@ -1838,14 +1836,12 @@ TTarget, T1, T2, T3> : IDisposable, ICloneable, ISerializable, IEquatable<LuminA
     
             Type[] paramTypes = [ typeof(T1), typeof(T2), typeof(T3) ];
 
-#if NET8_0_OR_GREATER
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, paramTypes)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#else
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, null, paramTypes, null)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#endif
-            result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
+            var method = MethodFinder.GetConcreteMethod(typeof(TTarget), methodName, paramTypes);
+
+            if (IsIl2Cpp)
+                result = new MethodCache(method.IsStatic, method.MethodHandle.Value, method);
+            else
+                result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
 
             Methods.TryAdd(key, result);
         }
@@ -1856,6 +1852,7 @@ TTarget, T1, T2, T3> : IDisposable, ICloneable, ISerializable, IEquatable<LuminA
     #endregion
 }
 
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
 public unsafe struct LuminAction<
 #if NET8_0_OR_GREATER
 [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
@@ -2303,14 +2300,12 @@ TTarget, T1, T2, T3, T4> : IDisposable, ICloneable, ISerializable, IEquatable<Lu
     
             Type[] paramTypes = [ typeof(T1), typeof(T2), typeof(T3), typeof(T4) ];
 
-#if NET8_0_OR_GREATER
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, paramTypes)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#else
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, null, paramTypes, null)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#endif
-            result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
+            var method = MethodFinder.GetConcreteMethod(typeof(TTarget), methodName, paramTypes);
+
+            if (IsIl2Cpp)
+                result = new MethodCache(method.IsStatic, method.MethodHandle.Value, method);
+            else
+                result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
 
             Methods.TryAdd(key, result);
         }
@@ -2321,6 +2316,7 @@ TTarget, T1, T2, T3, T4> : IDisposable, ICloneable, ISerializable, IEquatable<Lu
     #endregion
 }
 
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
 public unsafe struct LuminAction<
 #if NET8_0_OR_GREATER
 [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
@@ -2770,14 +2766,12 @@ TTarget, T1, T2, T3, T4, T5> : IDisposable, ICloneable, ISerializable, IEquatabl
     
             Type[] paramTypes = [ typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5) ];
 
-#if NET8_0_OR_GREATER
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, paramTypes)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#else
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, null, paramTypes, null)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#endif
-            result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
+            var method = MethodFinder.GetConcreteMethod(typeof(TTarget), methodName, paramTypes);
+
+            if (IsIl2Cpp)
+                result = new MethodCache(method.IsStatic, method.MethodHandle.Value, method);
+            else
+                result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
 
             Methods.TryAdd(key, result);
         }
@@ -2788,6 +2782,7 @@ TTarget, T1, T2, T3, T4, T5> : IDisposable, ICloneable, ISerializable, IEquatabl
     #endregion
 }
 
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
 public unsafe struct LuminAction<
 #if NET8_0_OR_GREATER
 [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
@@ -3239,14 +3234,12 @@ TTarget, T1, T2, T3, T4, T5, T6> : IDisposable, ICloneable, ISerializable, IEqua
     
             Type[] paramTypes = [ typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6) ];
 
-#if NET8_0_OR_GREATER
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, paramTypes)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#else
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, null, paramTypes, null)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#endif
-            result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
+            var method = MethodFinder.GetConcreteMethod(typeof(TTarget), methodName, paramTypes);
+
+            if (IsIl2Cpp)
+                result = new MethodCache(method.IsStatic, method.MethodHandle.Value, method);
+            else
+                result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
 
             Methods.TryAdd(key, result);
         }
@@ -3257,6 +3250,7 @@ TTarget, T1, T2, T3, T4, T5, T6> : IDisposable, ICloneable, ISerializable, IEqua
     #endregion
 }
 
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
 public unsafe struct LuminAction<
 #if NET8_0_OR_GREATER
 [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
@@ -3710,14 +3704,12 @@ TTarget, T1, T2, T3, T4, T5, T6, T7> : IDisposable, ICloneable, ISerializable, I
     
             Type[] paramTypes = [ typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7) ];
 
-#if NET8_0_OR_GREATER
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, paramTypes)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#else
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, null, paramTypes, null)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#endif
-            result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
+            var method = MethodFinder.GetConcreteMethod(typeof(TTarget), methodName, paramTypes);
+
+            if (IsIl2Cpp)
+                result = new MethodCache(method.IsStatic, method.MethodHandle.Value, method);
+            else
+                result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
 
             Methods.TryAdd(key, result);
         }
@@ -3728,6 +3720,7 @@ TTarget, T1, T2, T3, T4, T5, T6, T7> : IDisposable, ICloneable, ISerializable, I
     #endregion
 }
 
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
 public unsafe struct LuminAction<
 #if NET8_0_OR_GREATER
 [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
@@ -4183,14 +4176,12 @@ TTarget, T1, T2, T3, T4, T5, T6, T7, T8> : IDisposable, ICloneable, ISerializabl
     
             Type[] paramTypes = [ typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7), typeof(T8) ];
 
-#if NET8_0_OR_GREATER
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, paramTypes)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#else
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, null, paramTypes, null)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#endif
-            result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
+            var method = MethodFinder.GetConcreteMethod(typeof(TTarget), methodName, paramTypes);
+
+            if (IsIl2Cpp)
+                result = new MethodCache(method.IsStatic, method.MethodHandle.Value, method);
+            else
+                result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
 
             Methods.TryAdd(key, result);
         }
@@ -4201,6 +4192,7 @@ TTarget, T1, T2, T3, T4, T5, T6, T7, T8> : IDisposable, ICloneable, ISerializabl
     #endregion
 }
 
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
 public unsafe struct LuminAction<
 #if NET8_0_OR_GREATER
 [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
@@ -4658,14 +4650,12 @@ TTarget, T1, T2, T3, T4, T5, T6, T7, T8, T9> : IDisposable, ICloneable, ISeriali
     
             Type[] paramTypes = [ typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7), typeof(T8), typeof(T9) ];
 
-#if NET8_0_OR_GREATER
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, paramTypes)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#else
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, null, paramTypes, null)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#endif
-            result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
+            var method = MethodFinder.GetConcreteMethod(typeof(TTarget), methodName, paramTypes);
+
+            if (IsIl2Cpp)
+                result = new MethodCache(method.IsStatic, method.MethodHandle.Value, method);
+            else
+                result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
 
             Methods.TryAdd(key, result);
         }
@@ -4676,6 +4666,7 @@ TTarget, T1, T2, T3, T4, T5, T6, T7, T8, T9> : IDisposable, ICloneable, ISeriali
     #endregion
 }
 
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
 public unsafe struct LuminAction<
 #if NET8_0_OR_GREATER
 [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
@@ -5135,14 +5126,12 @@ TTarget, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : IDisposable, ICloneable, ISe
     
             Type[] paramTypes = [ typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7), typeof(T8), typeof(T9), typeof(T10) ];
 
-#if NET8_0_OR_GREATER
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, paramTypes)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#else
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, null, paramTypes, null)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#endif
-            result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
+            var method = MethodFinder.GetConcreteMethod(typeof(TTarget), methodName, paramTypes);
+
+            if (IsIl2Cpp)
+                result = new MethodCache(method.IsStatic, method.MethodHandle.Value, method);
+            else
+                result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
 
             Methods.TryAdd(key, result);
         }
@@ -5153,6 +5142,7 @@ TTarget, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : IDisposable, ICloneable, ISe
     #endregion
 }
 
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
 public unsafe struct LuminAction<
 #if NET8_0_OR_GREATER
 [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
@@ -5614,14 +5604,12 @@ TTarget, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : IDisposable, ICloneable
     
             Type[] paramTypes = [ typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7), typeof(T8), typeof(T9), typeof(T10), typeof(T11) ];
 
-#if NET8_0_OR_GREATER
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, paramTypes)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#else
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, null, paramTypes, null)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#endif
-            result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
+            var method = MethodFinder.GetConcreteMethod(typeof(TTarget), methodName, paramTypes);
+
+            if (IsIl2Cpp)
+                result = new MethodCache(method.IsStatic, method.MethodHandle.Value, method);
+            else
+                result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
 
             Methods.TryAdd(key, result);
         }
@@ -5632,6 +5620,7 @@ TTarget, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : IDisposable, ICloneable
     #endregion
 }
 
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
 public unsafe struct LuminAction<
 #if NET8_0_OR_GREATER
 [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
@@ -6095,14 +6084,12 @@ TTarget, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : IDisposable, IClon
     
             Type[] paramTypes = [ typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7), typeof(T8), typeof(T9), typeof(T10), typeof(T11), typeof(T12) ];
 
-#if NET8_0_OR_GREATER
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, paramTypes)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#else
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, null, paramTypes, null)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#endif
-            result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
+            var method = MethodFinder.GetConcreteMethod(typeof(TTarget), methodName, paramTypes);
+
+            if (IsIl2Cpp)
+                result = new MethodCache(method.IsStatic, method.MethodHandle.Value, method);
+            else
+                result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
 
             Methods.TryAdd(key, result);
         }
@@ -6113,6 +6100,7 @@ TTarget, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : IDisposable, IClon
     #endregion
 }
 
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
 public unsafe struct LuminAction<
 #if NET8_0_OR_GREATER
 [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
@@ -6578,14 +6566,12 @@ TTarget, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : IDisposable, 
     
             Type[] paramTypes = [ typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7), typeof(T8), typeof(T9), typeof(T10), typeof(T11), typeof(T12), typeof(T13) ];
 
-#if NET8_0_OR_GREATER
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, paramTypes)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#else
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, null, paramTypes, null)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#endif
-            result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
+            var method = MethodFinder.GetConcreteMethod(typeof(TTarget), methodName, paramTypes);
+
+            if (IsIl2Cpp)
+                result = new MethodCache(method.IsStatic, method.MethodHandle.Value, method);
+            else
+                result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
 
             Methods.TryAdd(key, result);
         }
@@ -6596,6 +6582,7 @@ TTarget, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : IDisposable, 
     #endregion
 }
 
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
 public unsafe struct LuminAction<
 #if NET8_0_OR_GREATER
 [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
@@ -7063,14 +7050,12 @@ TTarget, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : IDisposa
     
             Type[] paramTypes = [ typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7), typeof(T8), typeof(T9), typeof(T10), typeof(T11), typeof(T12), typeof(T13), typeof(T14) ];
 
-#if NET8_0_OR_GREATER
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, paramTypes)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#else
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, null, paramTypes, null)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#endif
-            result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
+            var method = MethodFinder.GetConcreteMethod(typeof(TTarget), methodName, paramTypes);
+
+            if (IsIl2Cpp)
+                result = new MethodCache(method.IsStatic, method.MethodHandle.Value, method);
+            else
+                result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
 
             Methods.TryAdd(key, result);
         }
@@ -7081,6 +7066,7 @@ TTarget, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : IDisposa
     #endregion
 }
 
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
 public unsafe struct LuminAction<
 #if NET8_0_OR_GREATER
 [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
@@ -7550,14 +7536,12 @@ TTarget, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> : IDi
     
             Type[] paramTypes = [ typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7), typeof(T8), typeof(T9), typeof(T10), typeof(T11), typeof(T12), typeof(T13), typeof(T14), typeof(T15) ];
 
-#if NET8_0_OR_GREATER
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, paramTypes)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#else
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, null, paramTypes, null)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#endif
-            result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
+            var method = MethodFinder.GetConcreteMethod(typeof(TTarget), methodName, paramTypes);
+
+            if (IsIl2Cpp)
+                result = new MethodCache(method.IsStatic, method.MethodHandle.Value, method);
+            else
+                result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
 
             Methods.TryAdd(key, result);
         }

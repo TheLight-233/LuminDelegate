@@ -451,14 +451,12 @@ TTarget, T, TArg> : IDisposable, ICloneable, ISerializable, IEquatable<LuminSpan
     
             Type[] paramTypes = [ typeof(Span<T>), typeof(TArg) ];
 
-#if NET8_0_OR_GREATER
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, paramTypes)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#else
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, null, paramTypes, null)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#endif
-            result = new LuminDelegate.MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
+            var method = MethodFinder.GetConcreteMethod(typeof(TTarget), methodName, paramTypes);
+
+            if (IsIl2Cpp)
+                result = new MethodCache(method.IsStatic, method.MethodHandle.Value, method);
+            else
+                result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
 
             Methods.TryAdd(key, result);
         }
@@ -911,14 +909,12 @@ TTarget, T, TArg> : IDisposable, ICloneable, ISerializable, IEquatable<LuminRead
     
             Type[] paramTypes = [ typeof(ReadOnlySpan<T>), typeof(TArg) ];
 
-#if NET8_0_OR_GREATER
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, paramTypes)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#else
-            var method = Type.GetTypeFromHandle(type)!.GetMethod(methodName, flags, null, paramTypes, null)
-                         ?? throw new MissingMethodException($"Method {methodName} not found on {Type.GetTypeFromHandle(type)!}");
-#endif
-            result = new LuminDelegate.MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
+            var method = MethodFinder.GetConcreteMethod(typeof(TTarget), methodName, paramTypes);
+
+            if (IsIl2Cpp)
+                result = new MethodCache(method.IsStatic, method.MethodHandle.Value, method);
+            else
+                result = new MethodCache(method.IsStatic, method.MethodHandle.GetFunctionPointer(), method);
 
             Methods.TryAdd(key, result);
         }

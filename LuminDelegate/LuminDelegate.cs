@@ -1,5 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace LuminDelegates;
@@ -8,7 +9,21 @@ public static partial class LuminDelegate
 {
     public static readonly ConcurrentDictionary<int, MethodCache> Methods = 
         new ConcurrentDictionary<int, MethodCache>();
+
+    internal static bool IsIl2Cpp { get; private set; }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void SwitchToIl2Cpp()
+    {
+        IsIl2Cpp = true;
+    }
     
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void SwitchModel(bool isIl2Cpp)
+    {
+        IsIl2Cpp = isIl2Cpp;
+    }
+
     #region Extensions
     
     // 将 Delegate 转换为 LuminAction<TTarget>
